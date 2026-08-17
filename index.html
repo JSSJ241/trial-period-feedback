@@ -723,7 +723,7 @@
                 <strong>Поздравляем с окончанием испытательного срока. Ты супер! 💪🤗</strong>
             </p>
             <p style="margin-top: 24px; font-size: 15px; color: #5a6d7e;">
-                И если тебе не сложно, мы будем очень благодарны, если ты оставишь короткий отзыв о компании по ссылке ниже.<br />
+                И если тебе не сложно, мы будем очень благодарны,<br /> если ты оставишь короткий отзыв о компании по ссылке ниже.<br />
                 Это помогает нам развиваться и привлекать сильных коллег в нашу команду. Спасибо! 🥰
             </p>
             <a href="https://dreamjob.ru/add?key=YNDrc6MfpyFY" target="_blank" class="dreamjob-link">
@@ -733,80 +733,132 @@
     </div>
 
     <script>
-        // ============================================
-        // 1. НАСТРОЙКА FORMPREE
-        // ============================================
-        const FORMSPREE_URL = "https://formspree.io/f/xnpagvvb"; // ЗАМЕНИТЕ НА ВАШ ID
+    // ============================================
+    // 1. НАСТРОЙКА FORMPREE
+    // ============================================
+    const FORMSPREE_URL = "https://formspree.io/f/xnpagvvb";
 
-        // ============================================
-        // 2. ОБРАБОТКА ФОРМЫ
-        // ============================================
+    // ============================================
+    // 2. ОБРАБОТКА ФОРМЫ
+    // ============================================
 
-        function checkFormValidity() {
-            // 1. Отдел
-            const dept = document.getElementById('department');
-            const deptValid = dept.value !== '';
+    function checkFormValidity() {
+        // 1. Отдел
+        const dept = document.getElementById('department');
+        const deptValid = dept.value !== '';
 
-            // 2. Адаптация в коллективе
-            const adapted = document.querySelector('input[name="adapted"]:checked');
-            const adaptedValid = !!adapted;
+        // 2. Адаптация в коллективе
+        const adapted = document.querySelector('input[name="adapted"]:checked');
+        const adaptedValid = !!adapted;
 
-            // 3. Уверенность в задачах
-            const confident = document.querySelector('input[name="confident"]:checked');
-            const confidentValid = !!confident;
+        // 3. Уверенность в задачах
+        const confident = document.querySelector('input[name="confident"]:checked');
+        const confidentValid = !!confident;
 
-            // 4. Текст: "Что было самым сложным"
-            const hardest = document.getElementById('hardest');
-            const hardestValid = hardest.value.trim().length > 3;
+        // 4. Текст: "Что было самым сложным"
+        const hardest = document.getElementById('hardest');
+        const hardestValid = hardest.value.trim().length > 3;
 
-            // 5. Текст: "Как улучшить адаптацию"
-            const improveText = document.getElementById('improve');
-            const improveTextValid = improveText.value.trim().length > 3;
+        // 5. Текст: "Как улучшить адаптацию"
+        const improveText = document.getElementById('improve');
+        const improveTextValid = improveText.value.trim().length > 3;
 
-            // 6. Рекомендация (1-10)
-            const recommend = document.querySelector('input[name="recommend"]:checked');
-            const recommendValid = !!recommend;
+        // 6. Рекомендация (1-10)
+        const recommend = document.querySelector('input[name="recommend"]:checked');
+        const recommendValid = !!recommend;
 
-            // 7-11. Аспекты (1-10)
-            const workConditions = document.querySelector('input[name="work_conditions"]:checked');
-            const teamRating = document.querySelector('input[name="team_rating"]:checked');
-            const management = document.querySelector('input[name="management"]:checked');
-            const restConditions = document.querySelector('input[name="rest_conditions"]:checked');
-            const income = document.querySelector('input[name="income"]:checked');
-            const aspectsValid = !!(workConditions && teamRating && management && restConditions && income);
+        // 7-11. Аспекты (1-10)
+        const workConditions = document.querySelector('input[name="work_conditions"]:checked');
+        const teamRating = document.querySelector('input[name="team_rating"]:checked');
+        const management = document.querySelector('input[name="management"]:checked');
+        const restConditions = document.querySelector('input[name="rest_conditions"]:checked');
+        const income = document.querySelector('input[name="income"]:checked');
+        const aspectsValid = !!(workConditions && teamRating && management && restConditions && income);
 
-            const isFormValid = deptValid && adaptedValid && confidentValid &&
-                               hardestValid && improveTextValid && recommendValid && aspectsValid;
+        const isFormValid = deptValid && adaptedValid && confidentValid &&
+                           hardestValid && improveTextValid && recommendValid && aspectsValid;
 
-            document.getElementById('submit-btn').disabled = !isFormValid;
-            return isFormValid;
+        document.getElementById('submit-btn').disabled = !isFormValid;
+        return isFormValid;
+    }
+
+    function getFormData() {
+        const deptSelect = document.getElementById('department');
+        const department = deptSelect.options[deptSelect.selectedIndex]?.text || deptSelect.value;
+
+        const adapted = document.querySelector('input[name="adapted"]:checked')?.value || 'Не выбрано';
+        const confident = document.querySelector('input[name="confident"]:checked')?.value || 'Не выбрано';
+        const hardest = document.getElementById('hardest').value.trim() || 'Не указано';
+        const improveText = document.getElementById('improve').value.trim() || 'Не указано';
+        const recommend = document.querySelector('input[name="recommend"]:checked')?.value || 'Не выбрано';
+
+        const workConditions = document.querySelector('input[name="work_conditions"]:checked')?.value || 'Не выбрано';
+        const teamRating = document.querySelector('input[name="team_rating"]:checked')?.value || 'Не выбрано';
+        const management = document.querySelector('input[name="management"]:checked')?.value || 'Не выбрано';
+        const restConditions = document.querySelector('input[name="rest_conditions"]:checked')?.value || 'Не выбрано';
+        const income = document.querySelector('input[name="income"]:checked')?.value || 'Не выбрано';
+
+        return {
+            department,
+            adapted,
+            confident,
+            hardest,
+            improveText,
+            recommend,
+            workConditions,
+            teamRating,
+            management,
+            restConditions,
+            income
+        };
+    }
+
+    async function submitForm() {
+        if (!checkFormValidity()) {
+            alert('Пожалуйста, ответьте на все обязательные вопросы.');
+            return;
         }
 
-        function getFormData() {
-            const deptSelect = document.getElementById('department');
-            const department = deptSelect.options[deptSelect.selectedIndex]?.text || deptSelect.value;
+        const data = getFormData();
+        const btn = document.getElementById('submit-btn');
+        btn.disabled = true;
+        btn.textContent = 'Отправка...';
 
-            const adapted = document.querySelector('input[name="adapted"]:checked')?.value || 'Не выбрано';
-            const confident = document.querySelector('input[name="confident"]:checked')?.value || 'Не выбрано';
-            const hardest = document.getElementById('hardest').value.trim() || 'Не указано';
-            const improveText = document.getElementById('improve').value.trim() || 'Не указано';
-            const recommend = document.querySelector('input[name="recommend"]:checked')?.value || 'Не выбрано';
+        try {
+            const response = await fetch(FORMSPREE_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
 
-            const workConditions = document.querySelector('input[name="work_conditions"]:checked')?.value || 'Не выбрано';
-            const teamRating = document.querySelector('input[name="team_rating"]:checked')?.value || 'Не выбрано';
-            const management = document.querySelector('input[name="management"]:checked')?.value || 'Не выбрано';
-            const restConditions = document.querySelector('input[name="rest_conditions"]:checked')?.value || 'Не выбрано';
-            const income = document.querySelector('input[name="income"]:checked')?.value || 'Не выбрано';
+            if (response.ok) {
+                document.getElementById('survey').style.display = 'none';
+                document.getElementById('thank-you').style.display = 'block';
+            } else {
+                const errorText = await response.text();
+                alert(`Ошибка отправки (${response.status}): ${errorText}. Попробуйте ещё раз.`);
+                btn.disabled = false;
+                btn.textContent = 'Отправить отзыв';
+            }
+        } catch (error) {
+            alert('Ошибка соединения. Проверьте интернет и попробуйте снова.');
+            btn.disabled = false;
+            btn.textContent = 'Отправить отзыв';
+        }
+    }
 
-            return {
-                department,
-                adapted,
-                confident,
-                hardest,
-                improveText,
-                recommend,
-                workConditions,
-                teamRating,
-                management,
-                restConditions,
-                income
+    // ============================================
+    // 3. ОБРАБОТЧИКИ СОБЫТИЙ
+    // ============================================
+
+    document.addEventListener('change', checkFormValidity);
+    document.addEventListener('input', checkFormValidity);
+
+    document.getElementById('submit-btn').addEventListener('click', submitForm);
+
+    // ============================================
+    // 4. ВАЛИДАЦИЯ ПРИ ЗАГРУЗКЕ
+    // ============================================
+
+    checkFormValidity();
+</script>
