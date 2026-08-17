@@ -736,7 +736,7 @@
     // ============================================
     // 1. НАСТРОЙКА FORMPREE
     // ============================================
-    const FORMSPREE_URL = "https://formspree.io/f/xnpagvvb";
+    const FORMSPREE_URL = "https://formspree.io/f/xljrpodw";
 
     // ============================================
     // 2. ОБРАБОТКА ФОРМЫ
@@ -799,17 +799,17 @@
         const income = document.querySelector('input[name="income"]:checked')?.value || 'Не выбрано';
 
         return {
-            department,
-            adapted,
-            confident,
-            hardest,
-            improveText,
-            recommend,
-            workConditions,
-            teamRating,
-            management,
-            restConditions,
-            income
+            "Отдел": department,
+            "Адаптация в коллективе (1-5)": adapted,
+            "Уверенность в задачах (1-5)": confident,
+            "Что было самым сложным": hardest,
+            "Как улучшить адаптацию": improveText,
+            "Рекомендация другу (1-10)": recommend,
+            "Условия труда (1-10)": workConditions,
+            "Коллектив (1-10)": teamRating,
+            "Руководство (1-10)": management,
+            "Условия для отдыха (1-10)": restConditions,
+            "Уровень дохода (1-10)": income
         };
     }
 
