@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Финишный рывок 🏁 — Опросник</title>
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+    <style>
+        /* ===== Стиль компании "Пиксель Плюс" ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #e8edf3;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 820px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 40px 45px;
+            box-shadow: 0 20px 60px rgba(28, 45, 65, 0.10);
+            animation: fadeIn 0.5s ease;
+            border: 3px solid #bd0a13;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== Шапка опросника ===== */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 28px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eef2f6;
+        }
+
+        .logo {
+            flex-shrink: 0;
+        }
+
+        .logo img {
+            height: 48px;
+            width: auto;
+            display: block;
+        }
+
+        /* ===== Основные элементы ===== */
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1d2d44;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .subhead {
+            font-size: 16px;
+            color: #5a6d7e;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .subhead strong {
+            color: #1d2d44;
+        }
+
+        .form-group {
+            margin-bottom: 32px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 16px;
+            color: #1d2d44;
+            margin-bottom: 6px;
+        }
+
+        .form-group .required {
+            color: #bd0a13;
+            font-weight: 700;
+            margin-left: 2px;
+        }
+
+        .form-group .hint {
+            display: block;
+            font-size: 14px;
+            font-weight: 400;
+            color: #7a8b9e;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1d2d44;
+            margin-top: 40px;
+            margin-bottom: 24px;
+            padding-top: 24px;
+            border-top: 2px solid #eef2f6;
+        }
+
+        .section-title:first-of-type {
+            margin-top: 0;
+            border-top: none;
+            padding-top: 0;
+        }
+
+        /* ===== Выпадающий список ===== */
+        select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #dde3e9;
+            border-radius: 12px;
+            font-size: 16px;
+            color: #1d2d44;
+            background: #ffffff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235a6d7e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 18px center;
+            appearance: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+
+        select:focus {
+            border-color: #bd0a13;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(189, 10, 19, 0.15);
+        }
+
+        select:invalid {
+            color: #7a8b9e;
+        }
+
+        select option {
+            color: #1d2d44;
+        }
+
+        /* ===== Шкалы (1-5) ===== */
+        .scale-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px 0;
+            margin-top: 8px;
+        }
+
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 14px;
+            color: #5a6d7e;
+            margin-top: 6px;
+        }
+
+        .scale-labels span:first-child {
+            text-align: left;
+        }
+        .scale-labels span:last-child {
+            text-align: right;
+        }
+
+        .scale-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2px;
+            width: 100%;
+            margin: 4px 0 2px;
+            justify-content: space-between;
+        }
+
+        .scale-options input[type="radio"] {
+            display: none;
+        }
+
+        .scale-options label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid #dde3e9;
+            background: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+            color: #1d2d44;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .scale-options label:hover {
+            border-color: #bd0a13;
+            background: #fdf0f1;
+        }
+
+        .scale-options input[type="radio"]:checked + label {
+            border-color: #bd0a13;
+            background: #bd0a13;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(189, 10, 19, 0.30);
+        }
+
+        /* ===== Шкалы (1-10) ===== */
+        .scale-10-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2px;
+            width: 100%;
+            margin: 4px 0 2px;
+            justify-content: space-between;
+        }
+
+        .scale-10-options input[type="radio"] {
+            display: none;
+        }
+
+        .scale-10-options label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #dde3e9;
+            background: #ffffff;
+            font-size: 14px;
+            font-weight: 500;
+            color: #1d2d44;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .scale-10-options label:hover {
+            border-color: #bd0a13;
+            background: #fdf0f1;
+        }
+
+        .scale-10-options input[type="radio"]:checked + label {
+            border-color: #bd0a13;
+            background: #bd0a13;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(189, 10, 19, 0.30);
+        }
+
+        /* ===== Текстовые поля ===== */
+        textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #dde3e9;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: inherit;
+            color: #1d2d44;
+            resize: vertical;
+            min-height: 90px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        textarea:focus {
+            border-color: #bd0a13;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(189, 10, 19, 0.12);
+        }
+
+        /* ===== Кнопка отправки ===== */
+        .btn-submit {
+            display: inline-block;
+            width: 100%;
+            padding: 16px 32px;
+            background: #bd0a13;
+            color: #ffffff;
+            border: none;
+            border-radius: 60px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            margin-top: 10px;
+            text-align: center;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            background: #a00810;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(189, 10, 19, 0.30);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* ===== Экран благодарности ===== */
+        #thank-you {
+            text-align: center;
+            padding: 30px 20px 20px;
+        }
+
+        #thank-you .checkmark {
+            font-size: 64px;
+            display: block;
+            margin-bottom: 16px;
+        }
+
+        #thank-you h2 {
+            font-size: 28px;
+            color: #1d2d44;
+            margin-bottom: 12px;
+        }
+
+        #thank-you p {
+            font-size: 16px;
+            color: #5a6d7e;
+            line-height: 1.7;
+        }
+
+        #thank-you .dreamjob-link {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 14px 32px;
+            background: #bd0a13;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.25s ease;
+        }
+
+        #thank-you .dreamjob-link:hover {
+            background: #a00810;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(189, 10, 19, 0.30);
+        }
+
+        /* ===== Адаптивность ===== */
+        @media (max-width: 600px) {
+            .card {
+                padding: 24px;
+                border-radius: 16px;
+            }
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .logo img {
+                height: 36px;
+            }
+            h1 {
+                font-size: 22px;
+            }
+            .subhead {
+                font-size: 15px;
+            }
+            .scale-options label,
+            .scale-10-options label {
+                width: 36px;
+                height: 36px;
+                font-size: 13px;
+            }
+            .section-title {
+                font-size: 19px;
+            }
+            .btn-submit {
+                font-size: 16px;
+                padding: 14px 20px;
+            }
+            #thank-you .dreamjob-link {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ===== ОСНОВНАЯ ФОРМА ===== -->
+        <div id="survey" class="card">
+            <!-- Шапка с логотипом -->
+            <div class="header">
+                <div class="logo">
+                    <img src="images/logo.png" alt="Пиксель Плюс" />
+                </div>
+            </div>
+
+            <h1>🏁 Финишный рывок</h1>
+            <p class="subhead">
+                Привет! 👋 Поздравляем, ты прошёл(ла) испытательный срок! 🎉 Ты уже освоился(лась), закрыл(а) первые большие задачи и стал(а) полноценной частью команды.
+                Нам очень важно услышать твой честный фидбек о том, как прошёл этот путь. Это займёт 3 минуты, но поможет нам стать лучше для тебя и будущих новичков.
+                Спасибо, что ты с нами! 💛
+            </p>
+
+            <!-- Вопрос 1: Отдел -->
+            <div class="form-group">
+                <label for="department">
+                    Из какого ты отдела?
+                    <span class="required">*</span>
+                </label>
+                <select id="department" required>
+                    <option value="" disabled selected>Выберите ваш отдел</option>
+                    <option value="SUP">Поддержка сайтов (SUP)</option>
+                    <option value="Performance">Performance</option>
+                    <option value="SEO">SEO и реклама (SEO)</option>
+                    <option value="DEV">Разработка сайтов (DEV)</option>
+                    <option value="HR_FIN_ADM">Бухгалтерия и офис (HR &amp; FIN &amp; ADM)</option>
+                    <option value="APP">Мобильные приложения (APP)</option>
+                    <option value="BRND">Корпоративный брендинг (BRND)</option>
+                    <option value="TNDR">Тендеры (TNDR)</option>
+                    <option value="UX">UX-специалисты</option>
+                    <option value="Marketing">Маркетинг</option>
+                </select>
+            </div>
+
+            <!-- Вопрос 2: Адаптация в коллективе -->
+            <div class="form-group">
+                <label>
+                    Ты чувствуешь, что полностью адаптировался(лась) в новом коллективе?
+                    <span class="required">*</span>
+                </label>
+                <div class="scale-container">
+                    <div class="scale-options">
+                        <input type="radio" name="adapted" value="1" id="adapted_1" required />
+                        <label for="adapted_1">1</label>
+                        <input type="radio" name="adapted" value="2" id="adapted_2" />
+                        <label for="adapted_2">2</label>
+                        <input type="radio" name="adapted" value="3" id="adapted_3" />
+                        <label for="adapted_3">3</label>
+                        <input type="radio" name="adapted" value="4" id="adapted_4" />
+                        <label for="adapted_4">4</label>
+                        <input type="radio" name="adapted" value="5" id="adapted_5" />
+                        <label for="adapted_5">5</label>
+                    </div>
+                    <div class="scale-labels">
+                        <span>Нет, чувствую себя всё ещё чужим(ой)</span>
+                        <span>Да! Я полностью свой(а) в этой команде</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Вопрос 3: Уверенность в задачах -->
+            <div class="form-group">
+                <label>
+                    Ты уверен(а), что справляешься с поставленными задачами?
+                    <span class="required">*</span>
+                </label>
+                <div class="scale-container">
+                    <div class="scale-options">
+                        <input type="radio" name="confident" value="1" id="confident_1" required />
+                        <label for="confident_1">1</label>
+                        <input type="radio" name="confident" value="2" id="confident_2" />
+                        <label for="confident_2">2</label>
+                        <input type="radio" name="confident" value="3" id="confident_3" />
+                        <label for="confident_3">3</label>
+                        <input type="radio" name="confident" value="4" id="confident_4" />
+                        <label for="confident_4">4</label>
+                        <input type="radio" name="confident" value="5" id="confident_5" />
+                        <label for="confident_5">5</label>
+                    </div>
+                    <div class="scale-labels">
+                        <span>Нет, часто чувствую неуверенность</span>
+                        <span>Да! Полностью контролирую свои задачи</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Вопрос 4: Что было самым сложным -->
+            <div class="form-group">
+                <label for="hardest">
+                    Что было самым сложным в период адаптации?
+                    <span class="required">*</span>
+                </label>
+                <textarea id="hardest" placeholder="Поделитесь, с чем пришлось столкнуться..." required></textarea>
+            </div>
+
+            <!-- Вопрос 5: Как улучшить адаптацию -->
+            <div class="form-group">
+                <label for="improve">
+                    Как компания может улучшить процесс адаптации для будущих сотрудников?
+                    <span class="required">*</span>
+                </label>
+                <textarea id="improve" placeholder="Напишите ваши предложения..." required></textarea>
+            </div>
+
+            <!-- Вопрос 6: Рекомендация (1-10) -->
+            <div class="form-group">
+                <label>
+                    Порекомендовал(а) бы ты эту компанию другу как место работы?
+                    <span class="required">*</span>
+                </label>
+                <div class="scale-container">
+                    <div class="scale-10-options">
+                        <input type="radio" name="recommend" value="1" id="recommend_1" required />
+                        <label for="recommend_1">1</label>
+                        <input type="radio" name="recommend" value="2" id="recommend_2" />
+                        <label for="recommend_2">2</label>
+                        <input type="radio" name="recommend" value="3" id="recommend_3" />
+                        <label for="recommend_3">3</label>
+                        <input type="radio" name="recommend" value="4" id="recommend_4" />
+                        <label for="recommend_4">4</label>
+                        <input type="radio" name="recommend" value="5" id="recommend_5" />
+                        <label for="recommend_5">5</label>
+                        <input type="radio" name="recommend" value="6" id="recommend_6" />
+                        <label for="recommend_6">6</label>
+                        <input type="radio" name="recommend" value="7" id="recommend_7" />
+                        <label for="recommend_7">7</label>
+                        <input type="radio" name="recommend" value="8" id="recommend_8" />
+                        <label for="recommend_8">8</label>
+                        <input type="radio" name="recommend" value="9" id="recommend_9" />
+                        <label for="recommend_9">9</label>
+                        <input type="radio" name="recommend" value="10" id="recommend_10" />
+                        <label for="recommend_10">10</label>
+                    </div>
+                    <div class="scale-labels">
+                        <span>Ни за что не порекомендую</span>
+                        <span>С огромным удовольствием!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== РАЗДЕЛ 2 ===== -->
+            <div class="section-title">📊 Оцени, пожалуйста, следующие аспекты работы в компании по шкале от 1 до 10</div>
+            <p style="font-size: 14px; color: #7a8b9e; margin-bottom: 24px;">(1 — очень плохо, 10 — замечательно)</p>
+
+            <!-- Аспект: Условия труда -->
+            <div class="form-group">
+                <label>
+                    Условия труда
+                    <span class="required">*</span>
+                </label>
+                <div class="scale-container">
+                    <div class="scale-10-options">
+                        <input type="radio" name="work_conditions" value="1" id="wc_1" required />
+                        <label for="wc_1">1</label>
+                        <input type="radio" name="work_conditions" value="2" id="wc_2" />
+                        <label for="wc_2">2</label>
+                        <input type="radio" name="work_conditions" value="3" id="wc_3" />
+                        <label for="wc_3">3</label>
+                        <input type="radio" name="work_conditions" value="4" id="wc_4" />
+                        <label for="wc_4">4</label>
+                        <input type="radio" name="work_conditions" value="5" id="wc_5" />
+                        <label for="wc_5">5</label>
+                        <input type="radio" name="work_conditions" value="6" id="wc_6" />
+                        <label for="wc_6">6</label>
+                        <input type="radio" name="work_conditions" value="7" id="wc_7" />
+                        <label for="wc_7">7</label>
+                        <input type="radio" name="work_conditions" value="8" id="wc_8" />
+                        <label for="wc_8">8</label>
+                        <input type="radio" name="work_conditions" value="9" id="wc_9" />
+                        <label for="wc_9">9</label>
+                        <input type="radio" name="work_conditions" value="10" id="wc_10" />
+                        <label for="wc_10">10</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Аспект: Коллектив -->
+            <div class="form-group">
+                <label>
+                    Коллектив
+                    <span class="required">*</span>
+                </label>
+                <div class="scale-container">
+                    <div class="scale-10-options">
+                        <input type="radio" name="team_rating" value="1" id="tr_1" required />
+                        <label for="tr_1">1</label>
+                        <input type="radio" name="team_rating" value="2" id="tr_2" />
+                        <label for="tr_2">2</label>
+                        <input type="radio" name="team_rating" value="3" id="tr_3" />
+                        <label for="tr_3">3</label>
+                        <input type="radio" name="team_rating" value="4" id="tr_4" />
+                        <label for="tr_4">4</label>
+                        <input type="radio" name="team_rating" value="5" id="tr_5" />
+                        <label for="tr_5">5</label>
+                        <input type="radio" name="team_rating" value="6" id="tr_6" />
+                        <label for="tr_6">6</label>
+                        <input type="radio" name="team_rating" value="7" id="tr_7" />
+                        <label for="tr_7">7</label>
+                        <input type="radio" name="team_rating" value="8" id="tr_8" />
+                        <label for="tr_8">8</label>
+                        <input type="radio" name="team_rating" value="9" id="tr_9" />
+                        <label for="tr_9">9</label>
+                        <input type="radio" name="team_rating" value="10" id="tr_10" />
+                        <label for="tr_10">10</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Аспект: Руководство -->
+            <div class="form-group">
+                <label>
+                    Руководство
+                    <span class="required">*</span>
+                </label>
+                <div class="scale-container">
+                    <div class="scale-10-options">
+                        <input type="radio" name="management" value="1" id="mgmt_1" required />
+                        <label for="mgmt_1">1</label>
+                        <input type="radio" name="management" value="2" id="mgmt_2" />
+                        <label for="mgmt_2">2</label>
+                        <input type="radio" name="management" value="3" id="mgmt_3" />
+                        <label for="mgmt_3">3</label>
+                        <input type="radio" name="management" value="4" id="mgmt_4" />
+                        <label for="mgmt_4">4</label>
+                        <input type="radio" name="management" value="5" id="mgmt_5" />
+                        <label for="mgmt_5">5</label>
+                        <input type="radio" name="management" value="6" id="mgmt_6" />
+                        <label for="mgmt_6">6</label>
+                        <input type="radio" name="management" value="7" id="mgmt_7" />
+                        <label for="mgmt_7">7</label>
+                        <input type="radio" name="management" value="8" id="mgmt_8" />
+                        <label for="mgmt_8">8</label>
+                        <input type="radio" name="management" value="9" id="mgmt_9" />
+                        <label for="mgmt_9">9</label>
+                        <input type="radio" name="management" value="10" id="mgmt_10" />
+                        <label for="mgmt_10">10</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Аспект: Условия для отдыха -->
+            <div class="form-group">
+                <label>
+                    Условия для отдыха
+                    <span class="required">*</span>
+                </label>
+                <div class="scale-container">
+                    <div class="scale-10-options">
+                        <input type="radio" name="rest_conditions" value="1" id="rc_1" required />
+                        <label for="rc_1">1</label>
+                        <input type="radio" name="rest_conditions" value="2" id="rc_2" />
+                        <label for="rc_2">2</label>
+                        <input type="radio" name="rest_conditions" value="3" id="rc_3" />
+                        <label for="rc_3">3</label>
+                        <input type="radio" name="rest_conditions" value="4" id="rc_4" />
+                        <label for="rc_4">4</label>
+                        <input type="radio" name="rest_conditions" value="5" id="rc_5" />
+                        <label for="rc_5">5</label>
+                        <input type="radio" name="rest_conditions" value="6" id="rc_6" />
+                        <label for="rc_6">6</label>
+                        <input type="radio" name="rest_conditions" value="7" id="rc_7" />
+                        <label for="rc_7">7</label>
+                        <input type="radio" name="rest_conditions" value="8" id="rc_8" />
+                        <label for="rc_8">8</label>
+                        <input type="radio" name="rest_conditions" value="9" id="rc_9" />
+                        <label for="rc_9">9</label>
+                        <input type="radio" name="rest_conditions" value="10" id="rc_10" />
+                        <label for="rc_10">10</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Аспект: Уровень дохода -->
+            <div class="form-group">
+                <label>
+                    Уровень дохода
+                    <span class="required">*</span>
+                </label>
+                <div class="scale-container">
+                    <div class="scale-10-options">
+                        <input type="radio" name="income" value="1" id="inc_1" required />
+                        <label for="inc_1">1</label>
+                        <input type="radio" name="income" value="2" id="inc_2" />
+                        <label for="inc_2">2</label>
+                        <input type="radio" name="income" value="3" id="inc_3" />
+                        <label for="inc_3">3</label>
+                        <input type="radio" name="income" value="4" id="inc_4" />
+                        <label for="inc_4">4</label>
+                        <input type="radio" name="income" value="5" id="inc_5" />
+                        <label for="inc_5">5</label>
+                        <input type="radio" name="income" value="6" id="inc_6" />
+                        <label for="inc_6">6</label>
+                        <input type="radio" name="income" value="7" id="inc_7" />
+                        <label for="inc_7">7</label>
+                        <input type="radio" name="income" value="8" id="inc_8" />
+                        <label for="inc_8">8</label>
+                        <input type="radio" name="income" value="9" id="inc_9" />
+                        <label for="inc_9">9</label>
+                        <input type="radio" name="income" value="10" id="inc_10" />
+                        <label for="inc_10">10</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Кнопка отправки -->
+            <button type="button" class="btn-submit" id="submit-btn" disabled>Отправить отзыв</button>
+        </div>
+
+        <!-- ===== ЭКРАН БЛАГОДАРНОСТИ ===== -->
+        <div id="thank-you" class="card" style="display: none;">
+            <span class="checkmark">🎉</span>
+            <h2>Огромное спасибо за твою честность! 🎉</h2>
+            <p>
+                Ты прошёл(ла) этот путь, и мы очень рады, что ты с нами.<br />
+                Твой фидбек поможет сделать нашу компанию ещё лучше.<br /><br />
+                <strong>Поздравляем с окончанием испытательного срока. Ты супер! 💪🤗</strong>
+            </p>
+            <p style="margin-top: 24px; font-size: 15px; color: #5a6d7e;">
+                И если тебе не сложно, мы будем очень благодарны, если ты оставишь короткий отзыв о компании по ссылке ниже.<br />
+                Это помогает нам развиваться и привлекать сильных коллег в нашу команду. Спасибо! 🥰
+            </p>
+            <a href="https://dreamjob.ru/add?key=YNDrc6MfpyFY" target="_blank" class="dreamjob-link">
+                ⭐ Оставить отзыв на DreamJob
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // 1. НАСТРОЙКА FORMPREE
+        // ============================================
+        const FORMSPREE_URL = "https://formspree.io/f/xnpagvvb"; // ЗАМЕНИТЕ НА ВАШ ID
+
+        // ============================================
+        // 2. ОБРАБОТКА ФОРМЫ
+        // ============================================
+
+        function checkFormValidity() {
+            // 1. Отдел
+            const dept = document.getElementById('department');
+            const deptValid = dept.value !== '';
+
+            // 2. Адаптация в коллективе
+            const adapted = document.querySelector('input[name="adapted"]:checked');
+            const adaptedValid = !!adapted;
+
+            // 3. Уверенность в задачах
+            const confident = document.querySelector('input[name="confident"]:checked');
+            const confidentValid = !!confident;
+
+            // 4. Текст: "Что было самым сложным"
+            const hardest = document.getElementById('hardest');
+            const hardestValid = hardest.value.trim().length > 3;
+
+            // 5. Текст: "Как улучшить адаптацию"
+            const improveText = document.getElementById('improve');
+            const improveTextValid = improveText.value.trim().length > 3;
+
+            // 6. Рекомендация (1-10)
+            const recommend = document.querySelector('input[name="recommend"]:checked');
+            const recommendValid = !!recommend;
+
+            // 7-11. Аспекты (1-10)
+            const workConditions = document.querySelector('input[name="work_conditions"]:checked');
+            const teamRating = document.querySelector('input[name="team_rating"]:checked');
+            const management = document.querySelector('input[name="management"]:checked');
+            const restConditions = document.querySelector('input[name="rest_conditions"]:checked');
+            const income = document.querySelector('input[name="income"]:checked');
+            const aspectsValid = !!(workConditions && teamRating && management && restConditions && income);
+
+            const isFormValid = deptValid && adaptedValid && confidentValid &&
+                               hardestValid && improveTextValid && recommendValid && aspectsValid;
+
+            document.getElementById('submit-btn').disabled = !isFormValid;
+            return isFormValid;
+        }
+
+        function getFormData() {
+            const deptSelect = document.getElementById('department');
+            const department = deptSelect.options[deptSelect.selectedIndex]?.text || deptSelect.value;
+
+            const adapted = document.querySelector('input[name="adapted"]:checked')?.value || 'Не выбрано';
+            const confident = document.querySelector('input[name="confident"]:checked')?.value || 'Не выбрано';
+            const hardest = document.getElementById('hardest').value.trim() || 'Не указано';
+            const improveText = document.getElementById('improve').value.trim() || 'Не указано';
+            const recommend = document.querySelector('input[name="recommend"]:checked')?.value || 'Не выбрано';
+
+            const workConditions = document.querySelector('input[name="work_conditions"]:checked')?.value || 'Не выбрано';
+            const teamRating = document.querySelector('input[name="team_rating"]:checked')?.value || 'Не выбрано';
+            const management = document.querySelector('input[name="management"]:checked')?.value || 'Не выбрано';
+            const restConditions = document.querySelector('input[name="rest_conditions"]:checked')?.value || 'Не выбрано';
+            const income = document.querySelector('input[name="income"]:checked')?.value || 'Не выбрано';
+
+            return {
+                department,
+                adapted,
+                confident,
+                hardest,
+                improveText,
+                recommend,
+                workConditions,
+                teamRating,
+                management,
+                restConditions,
+                income
